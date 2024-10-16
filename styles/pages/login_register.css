@@ -1,0 +1,86 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #530000;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 526px;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #d3d3d3;
+}
+
+input {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+    border: 1px solid #444;
+    border-radius: 4px;
+}
+
+button {
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    background-color: #800000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #b30000;
+}
+
+.flecha__atras{
+    position: absolute;
+    top: 16px;
+    left: 16px;
+}
+
+.flecha__atras img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+}
+
+
+.registrarteLogin{
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.registrarteLogin a {
+    display: block;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    background-color: #800000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: calc(526px - 2rem);
+    text-align: center;
+    text-decoration: none;
+}
+
+.registrarteLogin a:hover {
+    background-color: #b30000;
+}
