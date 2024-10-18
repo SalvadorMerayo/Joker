@@ -1,0 +1,95 @@
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.button-container img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.button-container img:hover {
+    transform: scale(1.1);
+}
+
+.image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.image-container img {
+    max-width: 300px;
+    height: auto;
+}
+
+.play-button {
+    display: block;
+    margin-top: 20px;
+}
+
+.play-button img {
+    width: 250px;
+    height: auto;
+    transition: transform 0.3s;
+}
+
+.play-button img:hover {
+    transform: scale(1.1);
+}
+
+.cerrarSesion {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    background-color: #b30000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.1s ease-in;
+}
+
+.cerrarSesion:hover {
+    transform: scale(1.25);
+}
+
+.cerrarSesion img {
+    width: 1rem;
+    height: 1rem;
+    object-fit: contain;
+}
+
+.botonAjustes {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    width: 3rem;
+    height: auto;
+    transition: all 0.1s ease-in;
+}
+
+.botonAjustes img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.botonAjustes:hover {
+    transform: scale(1.25);
+}

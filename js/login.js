@@ -1,20 +1,27 @@
-const email_admin = localStorage.getItem('email_admin')
-const password_admin = localStorage.getItem('password_admin')
+function iniciarSesion(event){
+    event.preventDefault();
 
-function iniciarSesion(formulario){
-    formulario.preventDefault();
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
+    const mensajeError = document.getElementById('mensajeError')
+    mensajeError.innerHTML = ''
 
-    if(email.value === email_admin){
-        if(password.value === password_admin){
-            alert('Bienvenido!')
-            localStorage.setItem('sesion_iniciada', 'true');
-            window.location.href = '/index.html'
-        } else {
-            alert('Datos incorrectos (password)!')
-        }
-    } else{
-        alert('Datos incorrectos (email)!')
+    const email = document.getElementById('email').value;
+    const contrasenia = document.getElementById('contrasenia').value;
+    
+    const baseDatos = localStorage.getItem('usuarios')
+    const baseDatosParseada = JSON.parse(baseDatos)
+
+    const usuarioEncontrado = baseDatosParseada.find( (usuario) => usuario.email === email )
+
+    if(!usuarioEncontrado){ // no existe?
+        mensajeError.innerHTML = 'Datos incorrectos.'
+        return;
     }
+
+    if(usuarioEncontrado.contrasenia !== contrasenia){
+        mensajeError.innerHTML = 'Datos incorrectos.'
+        return;
+    }
+    
+    localStorage.setItem('idLogueado', usuarioEncontrado.id)
+    window.location.href = '/pages/dashboard/index.html'
 }

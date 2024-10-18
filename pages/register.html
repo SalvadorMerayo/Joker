@@ -4,32 +4,32 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registrarse | Joker App</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="/styles/styles.css">
         <link rel="stylesheet" href="/styles/pages/login_register.css">
     </head>
     <body>
-        <h1 class="fs-1">REGISTRATE</h1>
+        <h1>REGISTRATE</h1>
         <p class="fs-6 text-white text-center">Ingresa tus datos para crear tu cuenta.</p>
-        <form id="registerForm">
-
-            <label for="name">Nombre</label>
-            <input type="text" id="name" name="name" required>
-
+        <form id="registerForm" onsubmit="registrarme(event)">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" maxlength="60" required>
             <label for="email">Correo electrónico</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" required>
-
-            <label for="repeatPassword">Repetir contraseña</label>
-            <input type="password" id="repeatPassword" name="repeatPassword" required>
-
+            <input type="email" id="email" name="email" maxlength="60" required>
+            <label for="contrasenia">Contraseña</label>
+            <input type="password" id="contrasenia" name="contrasenia" maxlength="60" required>
+            <label for="repetirContrasenia">Repetir contraseña</label>
+            <input type="password" id="repetirContrasenia" name="repetirContrasenia" maxlength="60" required>
+            <p id="mensajeError"></p>
             <button type="submit">Registrarme</button>
         </form>
         <a href="/pages/login.html" class="flecha__atras">
             <img src="/assets/flecha.png">
         </a>
+        <script src="/js/register.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 </html>
