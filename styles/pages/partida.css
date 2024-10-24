@@ -1,0 +1,26 @@
+.reiniciarPartida {
+    position: absolute;
+    top: 2rem;
+    left: 7rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.reiniciarPartida a {
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    background-color: #800000;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    text-decoration: none;
+}
+
+.reiniciarPartida a:hover {
+    background-color: #b30000;
+}

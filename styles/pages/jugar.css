@@ -15,20 +15,3 @@
 .player-button img:hover {
     transform: scale(1.1);
 }
-
-.arrow-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    cursor: pointer;
-}
-
-.arrow-button img {
-    width: 50px;
-    height: auto;
-    transition: transform 0.3s;
-}
-
-.arrow-button img:hover {
-    transform: scale(1.1);
-}

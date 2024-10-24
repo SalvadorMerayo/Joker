@@ -3,7 +3,11 @@
 //         id: 1,
 //         nombre: 'Admin',
 //         email: 'admin@admin.com',
-//         contrasenia: 'admin123'
+//         contrasenia: 'admin123',
+//         partidasJugadas: 0,
+//         partidasGanadas: 0,
+//         partidasPerdidas: 0,
+//         experiencia: 0
 //     }
 // ]
 // localStorage.setItem('usuarios', JSON.stringify(usuarios))
@@ -31,7 +35,11 @@ function registrarme (event) {
         id,
         nombre: nombre.trim(),
         email: email.trim().toLowerCase(),
-        contrasenia
+        contrasenia,
+        partidasJugadas: 0,
+        partidasGanadas: 0,
+        partidasPerdidas: 0,
+        experiencia: 0
     }
 
     const usuarios_final = [ ...baseDatosParseada, usuario_nuevo ]

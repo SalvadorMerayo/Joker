@@ -118,3 +118,95 @@
 #player_top .player_hand {
     transform: translateY(1em);
 }
+
+.gameover{
+    width: 100%;
+    height: 100vh;
+    z-index: 99999999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #320061;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.gameover a{
+    margin-top: 2rem;
+    text-decoration: none;
+    background-color: #b30000;
+    color: white;
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    border-radius: 1rem;
+    transition: all 0.1s ease-in;
+}
+
+.gameover a:hover {
+    transform: scale(1.125);
+}
+
+.gameoverEscondido{
+    display: none;
+}
+
+.cambioColor{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99999999;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.cambioColorEscondido{
+    display: none;
+}
+
+.elegirColor{
+    width: 15rem;
+    height: 15rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    clip-path: polygon(35% 0, 100% 0, 65% 100%, 0% 100%);
+}
+
+.cambioColor .elegirColor .rojo{
+    background-color: #FF0000;
+    position: relative;
+    left: 41.5px;
+}
+
+.cambioColor .elegirColor .naranja{
+    background-color: #FF914D;
+}
+
+.cambioColor .elegirColor .negro{
+    background-color: #060606;
+}
+
+.cambioColor .elegirColor .amarillo{
+    background-color: #FFDE59;
+    position: relative;
+    right: 41.5px;
+}
+
+.cambioColor .elegirColor div{
+    width: 50%;
+    aspect-ratio: 1;
+    clip-path: polygon(35% 0, 100% 0, 65% 100%, 0% 100%);
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+}
+
+.cambioColor .elegirColor div:hover{
+    opacity: 0.75;
+}
