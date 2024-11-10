@@ -100,8 +100,12 @@
     grid-area: 3/2;
 }
 
-#player_top {
-    grid-area: 1/2;
+#player_left {
+    grid-area: 2/1;
+}
+
+#player_right {
+    grid-area: 2/3;
 }
 
 .player_hand {
@@ -125,8 +129,22 @@
     transform: translateX(2em);
 }
 
-#player_top .player_hand {
-    transform: translateY(1em);
+#player_left .player_hand {
+    transform-origin: left bottom;
+    transform: rotate(90deg) translateY(-10em);
+}
+
+#player_left .player_hand .card{
+    transform: rotate(180deg);
+}
+
+#player_right .player_hand {
+    transform-origin: left bottom;
+    transform: rotate(-90deg) translate(-24em, 1em);
+}
+
+#player_right .player_hand .card{
+    transform: rotate(180deg);
 }
 
 .gameover{

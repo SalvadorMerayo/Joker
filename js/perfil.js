@@ -28,4 +28,9 @@ const perdidasPerfil = document.getElementById('perdidasPerfil');
 perdidasPerfil.innerHTML = usuario.partidasPerdidas;
 
 const victoriasPerfil = document.getElementById('victoriasPerfil');
-victoriasPerfil.innerHTML = `${parseFloat(usuario.partidasGanadas / usuario.partidasJugadas * 100).toFixed(2)} %`;
+const porcentajeVictorias = usuario.partidasGanadas / usuario.partidasJugadas * 100
+if(parseFloat(porcentajeVictorias)){
+    victoriasPerfil.innerHTML = `${parseFloat(porcentajeVictorias).toFixed(2)} %`;
+} else {
+    victoriasPerfil.innerHTML = '-';
+}

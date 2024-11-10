@@ -2,10 +2,9 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #530000;
+    background-color: #1f1f1f;
     padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    border-radius: 0.25rem;
     width: 100%;
     max-width: 526px;
 }
@@ -13,34 +12,22 @@ form {
 label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: #d3d3d3;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 7px;
+    opacity: 0.75;
+    font-size: 0.9rem;
 }
 
 input {
     margin-bottom: 1rem;
     padding: 0.5rem;
     width: 100%;
-    border: 1px solid #444;
+    background-color: rgba(55, 55, 55, 1);
     border-radius: 4px;
-}
-
-button {
-    padding-inline: 1rem;
-    padding-block: 0.5rem;
-    background-color: #800000;
-    color: white;
     border: none;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-    border-radius: 0.5rem;
-    width: 100%;
-}
-
-button:hover {
-    background-color: #b30000;
+    outline: none;
+    color: white;
 }
 
 .flecha__atras{
@@ -55,32 +42,34 @@ button:hover {
     object-fit: contain;
 }
 
-
-.registrarteLogin{
-    margin-top: 1rem;
+.boton,
+.botonRegistrate a{
     width: 100%;
+    max-width: 496px;
     display: flex;
     justify-content: center;
-}
-
-.registrarteLogin a {
-    display: block;
-    padding-inline: 1rem;
-    padding-block: 0.5rem;
-    background-color: #800000;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-    border-radius: 0.5rem;
-    width: 100%;
-    max-width: calc(526px - 2rem);
-    text-align: center;
+    align-items: center;
     text-decoration: none;
+    color: #1f1f1f;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: all .2s ease;
 }
 
-.registrarteLogin a:hover {
-    background-color: #b30000;
+.boton:hover,
+.botonRegistrate a:hover{
+    transform: scale(1.05);
+    opacity: 0.85;
+}
+
+.botonRegistrate{
+    margin-top: 2rem;
+}
+
+.botonRegistrate a{
+    width: 496px;
+    color: white;
+    background-color: #A64D79;
+    text-decoration: none;
 }

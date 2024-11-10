@@ -120,6 +120,8 @@ let cartasDisponibles = [...DECK];
 let cartasJugadas = [];
 let jugadores = [
     [],
+    [],
+    [],
     []
 ];
 let juegaUsuario = true;
@@ -135,45 +137,58 @@ function mezclarMazo() {
 
 function repartirCartas() {
     for (let i = 0; i < 7; i++) {
-        for (let j = 0; j < 2; j++) {
+        for (let j = 0; j < 4; j++) {
             jugadores[j].push(cartasDisponibles.pop());
         }
     }
 }
 
 function sacarCarta(){
-    jugadores[1].push(cartasDisponibles.pop());
+    jugadores[0].push(cartasDisponibles.pop());
     juegaUsuario = false;
     setTimeout(() => {
-        rivalJuega()
+        juegaJugador2()
     }, 1500);
 }
 
-function sacarCartaRival(){
-    jugadores[0].push(cartasDisponibles.pop());
+function sacarCartaRival(index){
+    jugadores[index].push(cartasDisponibles.pop());
 }
 
 function mostrarCartas() {
     contadorCartas.innerHTML = cartasDisponibles.length
     const manoJugadorUno = document.getElementById('manoJugadorUno')
     const manoJugadorDos = document.getElementById('manoJugadorDos')
+    const manoJugadorTres = document.getElementById('manoJugadorTres')
+    const manoJugadorCuatro = document.getElementById('manoJugadorCuatro')
     manoJugadorUno.innerHTML = '';
     manoJugadorDos.innerHTML = '';
+    manoJugadorTres.innerHTML = '';
+    manoJugadorCuatro.innerHTML = '';
 
-    for(let i = 0; i < 2; i++){
+    for(let i = 0; i < 4; i++){
         jugadores[i].forEach((carta, index) => {
             const cartaDiv = document.createElement('div');
             cartaDiv.classList.add('card');
-            cartaDiv.onclick = () => jugarCarta(carta);
-            if(i === 1){
+            if(i === 0){
                 cartaDiv.style.left = `${3.25 * index}em`;
+            } else {
+                cartaDiv.style.left = `${2.2 * index}em`;
+            }
+            cartaDiv.onclick = () => jugarCarta(carta);
+            if(i === 0){
                 cartaDiv.classList.add('cardJugador');
                 cartaDiv.innerHTML = `<img src="${carta.imagen}">`;
                 manoJugadorUno.appendChild(cartaDiv);
-            } else {
-                cartaDiv.style.left = `${2.2 * index}em`;
+            } else if(i === 1) {
                 cartaDiv.innerHTML = '<img src="/assets/carta_trasera.png">';
                 manoJugadorDos.appendChild(cartaDiv);
+            } else if(i === 2) {
+                cartaDiv.innerHTML = '<img src="/assets/carta_trasera.png">';
+                manoJugadorTres.appendChild(cartaDiv);
+            } else if(i === 3) {
+                cartaDiv.innerHTML = '<img src="/assets/carta_trasera.png">';
+                manoJugadorCuatro.appendChild(cartaDiv);
             }
         });
     }
@@ -194,11 +209,19 @@ const masTres = (index) => {
 
 const cambioTurno = (index) => {
     if(index === 0){
-        setTimeout(() => {
-            rivalJuega();
-        }, 1500);
-    } else {
         juegaUsuario = true;
+    } else if (index === 1){
+        setTimeout(() => {
+            juegaJugador2();
+        }, 1500);
+    } else if (index === 2){
+        setTimeout(() => {
+            juegaJugador3();
+        }, 1500);
+    } else if (index === 3){
+        setTimeout(() => {
+            juegaJugador4();
+        }, 1500);
     }
 }
 
@@ -239,16 +262,16 @@ const elegirColor = (color) => {
     }
 
     setTimeout(() => {
-        rivalJuega()
+        juegaJugador2()
     }, 1500);
 }
 
-const cambiarColorRival = () => {
+const cambiarColorRival = (index) => {
     cartasJugadas[cartasJugadas.length - 1].numero = -1;
-    const cartasAmarillas = jugadores[0].filter( carta => carta.color === 'amarillo').length;
-    const cartasNaranjas = jugadores[0].filter( carta => carta.color === 'naranja').length;
-    const cartasRojas = jugadores[0].filter( carta => carta.color === 'rojo').length;
-    const cartasNegras = jugadores[0].filter( carta => carta.color === 'negro').length;
+    const cartasAmarillas = jugadores[index].filter( carta => carta.color === 'amarillo').length;
+    const cartasNaranjas = jugadores[index].filter( carta => carta.color === 'naranja').length;
+    const cartasRojas = jugadores[index].filter( carta => carta.color === 'rojo').length;
+    const cartasNegras = jugadores[index].filter( carta => carta.color === 'negro').length;
     const cartaDescartada = document.getElementById('cartaDescartada')
     
     if( cartasAmarillas > cartasNaranjas && cartasAmarillas > cartasRojas && cartasAmarillas > cartasNegras ){
@@ -279,20 +302,16 @@ const masSeis = (index) => {
     revisarCantidadCartas()
 }
 
-const cambioColorMasSeis = (index) => {
+const cambioColorMasSeis = (index, indexRival) => {
     if( index === 0 ){
         cambiarColor()
     } else {
-        cambiarColorRival()
+        cambiarColorRival(index)
     }
-    masSeis(index)
+    masSeis(indexRival)
 }
 
-const robo = (index) => {
-    let indexRival = 0;
-    if(index === 0){
-        indexRival = 1;
-    }
+const robo = (index, indexRival) => {
     const indexEspecial = jugadores[indexRival].findIndex( carta => carta.color === 'especial');
     if(indexEspecial === -1){
         return;
@@ -317,7 +336,7 @@ const joker = (index) => {
 // JUGAR
 
 const jugar = () => {
-    if(jugadores[0].length < 1 && jugadores[1].length < 1){
+    if(jugadores[0].length < 1 && jugadores[1].length < 1 && jugadores[2].length < 1 && jugadores[3].length < 1){
         mezclarMazo();
         let carta;
         let bandera = false;
@@ -354,26 +373,30 @@ const actualizarUsuario = (jugador) => {
     usuario.partidasJugadas = usuario.partidasJugadas + 1
     if(jugador === 0){
         usuario.partidasPerdidas = usuario.partidasPerdidas + 1
-        usuario.experiencia = usuario.experiencia + 500
+        usuario.experiencia = usuario.experiencia + 1000
     } else if(jugador === 1){
         usuario.partidasGanadas = usuario.partidasGanadas + 1
-        usuario.experiencia = usuario.experiencia + 1000
+        usuario.experiencia = usuario.experiencia + 2000
     }
 
     baseDatos[indexUsuario] = usuario
     localStorage.setItem('usuarios', JSON.stringify(baseDatos))
 }
 
-const terminarJuego = (jugador) => {
-    actualizarUsuario(jugador)
+const terminarJuego = (index) => {
+    actualizarUsuario(index)
     const gameoverContainer = document.getElementById('gameover');
     const gameoverSpan = document.getElementById('ganadorJuego');
     gameoverContainer.classList.remove('gameoverEscondido');
-    if(jugador === 0){
-        gameoverSpan.innerHTML = '¡Gano el Jugador Dos!'
-    } else if(jugador === 1){
+    if(index === 0){
         gameoverSpan.innerHTML = '¡Felicidades, ganaste!'
-    } else if(jugador === -1){
+    } else if(index === 1){
+        gameoverSpan.innerHTML = '¡Gano el Jugador Dos!'
+    } else if(index === 2){
+        gameoverSpan.innerHTML = '¡Gano el Jugador Tres!'
+    } else if(index === 3){
+        gameoverSpan.innerHTML = '¡Gano el Jugador Cuatro!'
+    } else if(index === -1){
         gameoverSpan.innerHTML = 'Hubo un empate!'
     }
 }
@@ -387,10 +410,15 @@ const revisarCantidadCartas = () => {
     draw_pile.style.opacity = 0;
 
     let jugadorConMenosCartas = 0;
-    if(jugadores[0].length < jugadores[1].length){
+
+    if(jugadores[0].length < jugadores[1].length && jugadores[0].length < jugadores[2].length && jugadores[0].length < jugadores[3].length){
         jugadorConMenosCartas = 0;
-    } else if(jugadores[1].length < jugadores[0].length){
+    } else if(jugadores[1].length < jugadores[0].length && jugadores[1].length < jugadores[2].length && jugadores[1].length < jugadores[3].length){
         jugadorConMenosCartas = 1;
+    } else if(jugadores[2].length < jugadores[0].length && jugadores[2].length < jugadores[1].length && jugadores[2].length < jugadores[3].length){
+        jugadorConMenosCartas = 2;
+    } else if(jugadores[3].length < jugadores[0].length && jugadores[3].length < jugadores[1].length && jugadores[3].length < jugadores[2].length){
+        jugadorConMenosCartas = 3;
     } else{
         jugadorConMenosCartas = -1;
     }
@@ -400,12 +428,12 @@ const revisarCantidadCartas = () => {
     }, 1500);
 }
 
-const rivalJuega = () => {
+const juegaJugador2 = () => {
     const ultimaCartaJugada = cartasJugadas[cartasJugadas.length - 1]
     let yaJugo = false;
     let cambiaTurno = false;
 
-    jugadores[0].forEach( (cartaRival, index) => {
+    jugadores[1].forEach( (cartaRival, index) => {
         if(yaJugo){
             return;
         }
@@ -417,51 +445,200 @@ const rivalJuega = () => {
         const cartaDescartada = document.getElementById('cartaDescartada')
         cartaDescartada.innerHTML = `<img src="${cartaRival.imagen}">`;
         cartasJugadas.push(cartaRival);
-        jugadores[0].splice(index, 1);
+        jugadores[1].splice(index, 1);
         yaJugo = true;
         if(yaJugo){
             if(cartaRival.numero === 10){
                 setTimeout(() => {
-                    masTres(1)
+                    masTres(2)
                 }, 500);
             } else if(cartaRival.numero === 11){
                 setTimeout(() => {
-                    cambiarColorRival()
+                    cambiarColorRival(1)
                 }, 500);
             } else if(cartaRival.numero === 12){
                 setTimeout(() => {
-                    cambioColorMasSeis(1)
+                    cambioColorMasSeis(1, 2)
                 }, 500);
             } else if(cartaRival.numero === 13){
                 setTimeout(() => {
-                    bomba(0)
+                    bomba(1)
                 }, 500);
             } else if(cartaRival.numero === 14){
                 cambiaTurno = true;
                 setTimeout(() => {
-                    cambioTurno(0)
+                    cambioTurno(1)
                 }, 500);
             } else if(cartaRival.numero === 15){
                 setTimeout(() => {
-                    joker(0)
+                    joker(1)
                 }, 500);
             } else if(cartaRival.numero === 16){
                 setTimeout(() => {
-                    robo(0)
+                    robo(1, 2)
                 }, 500);
             }
         }
     })
 
     if(!yaJugo){
-        sacarCartaRival()
+        sacarCartaRival(1)
     }
 
-    mostrarCartas(jugadores);
+    mostrarCartas();
     
-    if(jugadores[0].length === 0){
+    if(jugadores[1].length === 0){
         setTimeout(() => {
-            terminarJuego(0)
+            terminarJuego(1)
+        }, 1500);
+    }
+
+    if(!cambiaTurno){
+        setTimeout(() => {
+            revisarCantidadCartas()
+            juegaJugador3()
+        }, 1500);
+    }
+
+}
+
+const juegaJugador3 = () => {
+    const ultimaCartaJugada = cartasJugadas[cartasJugadas.length - 1]
+    let yaJugo = false;
+    let cambiaTurno = false;
+
+    jugadores[2].forEach( (cartaRival, index) => {
+        if(yaJugo){
+            return;
+        }
+
+        if(ultimaCartaJugada.color !== cartaRival.color && ultimaCartaJugada.numero !== cartaRival.numero && cartaRival.color !== 'especial' && ultimaCartaJugada.color !== 'especial'){
+            return;
+        }
+
+        const cartaDescartada = document.getElementById('cartaDescartada')
+        cartaDescartada.innerHTML = `<img src="${cartaRival.imagen}">`;
+        cartasJugadas.push(cartaRival);
+        jugadores[2].splice(index, 1);
+        yaJugo = true;
+        if(yaJugo){
+            if(cartaRival.numero === 10){
+                setTimeout(() => {
+                    masTres(3)
+                }, 500);
+            } else if(cartaRival.numero === 11){
+                setTimeout(() => {
+                    cambiarColorRival(2)
+                }, 500);
+            } else if(cartaRival.numero === 12){
+                setTimeout(() => {
+                    cambioColorMasSeis(2, 3)
+                }, 500);
+            } else if(cartaRival.numero === 13){
+                setTimeout(() => {
+                    bomba(2)
+                }, 500);
+            } else if(cartaRival.numero === 14){
+                cambiaTurno = true;
+                setTimeout(() => {
+                    cambioTurno(2)
+                }, 500);
+            } else if(cartaRival.numero === 15){
+                setTimeout(() => {
+                    joker(2)
+                }, 500);
+            } else if(cartaRival.numero === 16){
+                setTimeout(() => {
+                    robo(2, 3)
+                }, 500);
+            }
+        }
+    })
+
+    if(!yaJugo){
+        sacarCartaRival(2)
+    }
+
+    mostrarCartas();
+    
+    if(jugadores[2].length === 0){
+        setTimeout(() => {
+            terminarJuego(2)
+        }, 1500);
+    }
+
+    if(!cambiaTurno){
+        setTimeout(() => {
+            revisarCantidadCartas()
+            juegaJugador4()
+        }, 1500);
+    }
+
+    revisarCantidadCartas()
+}
+
+const juegaJugador4 = () => {
+    const ultimaCartaJugada = cartasJugadas[cartasJugadas.length - 1]
+    let yaJugo = false;
+    let cambiaTurno = false;
+
+    jugadores[3].forEach( (cartaRival, index) => {
+        if(yaJugo){
+            return;
+        }
+
+        if(ultimaCartaJugada.color !== cartaRival.color && ultimaCartaJugada.numero !== cartaRival.numero && cartaRival.color !== 'especial' && ultimaCartaJugada.color !== 'especial'){
+            return;
+        }
+
+        const cartaDescartada = document.getElementById('cartaDescartada')
+        cartaDescartada.innerHTML = `<img src="${cartaRival.imagen}">`;
+        cartasJugadas.push(cartaRival);
+        jugadores[3].splice(index, 1);
+        yaJugo = true;
+        if(yaJugo){
+            if(cartaRival.numero === 10){
+                setTimeout(() => {
+                    masTres(0)
+                }, 500);
+            } else if(cartaRival.numero === 11){
+                setTimeout(() => {
+                    cambiarColorRival(3)
+                }, 500);
+            } else if(cartaRival.numero === 12){
+                setTimeout(() => {
+                    cambioColorMasSeis(3, 0)
+                }, 500);
+            } else if(cartaRival.numero === 13){
+                setTimeout(() => {
+                    bomba(3)
+                }, 500);
+            } else if(cartaRival.numero === 14){
+                cambiaTurno = true;
+                setTimeout(() => {
+                    cambioTurno(3)
+                }, 500);
+            } else if(cartaRival.numero === 15){
+                setTimeout(() => {
+                    joker(3)
+                }, 500);
+            } else if(cartaRival.numero === 16){
+                setTimeout(() => {
+                    robo(3, 0)
+                }, 500);
+            }
+        }
+    })
+
+    if(!yaJugo){
+        sacarCartaRival(3)
+    }
+
+    mostrarCartas();
+    
+    if(jugadores[3].length === 0){
+        setTimeout(() => {
+            terminarJuego(3)
         }, 1500);
     }
 
@@ -488,7 +665,7 @@ const jugarCarta = (carta) => {
     juegaUsuario = false;
     const cartaDescartada = document.getElementById('cartaDescartada')
     cartaDescartada.innerHTML = `<img src="${carta.imagen}">`;
-    
+
     if(cartasJugadas.length >= 10){
         const pilaDiv = document.createElement('div');
         pilaDiv.classList.add('card');
@@ -497,13 +674,13 @@ const jugarCarta = (carta) => {
     }
 
     cartasJugadas.push(carta);
-    const cartaJugada = jugadores[1].findIndex( cartaJug => cartaJug === carta);
-    jugadores[1].splice(cartaJugada, 1);
+    const cartaJugada = jugadores[0].findIndex( cartaJug => cartaJug === carta);
+    jugadores[0].splice(cartaJugada, 1);
     mostrarCartas();
 
     if(carta.numero === 10){
         setTimeout(() => {
-            masTres(0)
+            masTres(1)
         }, 500);
     } else if(carta.numero === 11){
         cambioColor = true;
@@ -513,30 +690,30 @@ const jugarCarta = (carta) => {
     } else if(carta.numero === 12){
         cambioColor = true;
         setTimeout(() => {
-            cambioColorMasSeis(0)
+            cambioColorMasSeis(0, 1)
         }, 500);
     } else if(carta.numero === 13){
         setTimeout(() => {
-            bomba(1)
+            bomba(0)
         }, 500);
     } else if(carta.numero === 14){
         cambiaTurno = true;
         setTimeout(() => {
-            cambioTurno(1)
+            cambioTurno(0)
         }, 500);
     } else if(carta.numero === 15){
         setTimeout(() => {
-            joker(1)
+            joker(0)
         }, 500);
     } else if(carta.numero === 16){
         setTimeout(() => {
-            robo(1)
+            robo(0, 1)
         }, 500);
     }
 
-    if(jugadores[1].length == 0){
+    if(jugadores[0].length === 0){
         setTimeout(() => {
-            terminarJuego(1)
+            terminarJuego(0)
         }, 1500);
     }
 
@@ -546,6 +723,6 @@ const jugarCarta = (carta) => {
 
     setTimeout(() => {
         revisarCantidadCartas()
-        rivalJuega()
+        juegaJugador2()
     }, 1500);
 }
